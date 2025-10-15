@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import sequelize from './db.js';
+import models from './models/models.js';
 
 const app = express()
 const PORT = process.env.PORT
@@ -12,6 +13,7 @@ app.listen(PORT, () => {
 const Start = async () => { // если Node.js видит async то она понимает, что функция будет асинхронной
 	try {
 		await sequelize.authenticate()
+		await sequelize.sync( {alter : true} )
 		app.listen(PORT, () => {
    		console.log(`сервер запущен на порту ${PORT}`
 )})

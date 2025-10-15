@@ -1,4 +1,4 @@
-Модуль 4. Теория Бэкэнда
+﻿Модуль 4. Теория Бэкэнда
 
 Node.js это среда выполнения для JS построенная на движке V8 из гугл хром. Node.js позволяет запускать JS код вне браузера. Node.js можно установить как на сервер, так и локально на компьютер. Node.js поддерживает ассинхронный ввод-вывод, но является однопоточным, т.к. JS не поддерживает многопоточный режим работы
 Ключевые особенности: 
@@ -149,3 +149,73 @@ const User = sequelize.define(
 
 // `sequelize.define` возвращает модель
 console.log(User === sequelize.models.User) // true
+
+
+15.10.2025
+
+Описание модели данных выглядит так:
+
+const Client = sequelize.define ('clients', {
+    id:{
+        type : DataTypes.INTEGER,
+        primaryKey : true,
+        autoIncrement : true,
+        allowNull : false
+    },
+    name:{
+        type : DataTypes.STRING(55),
+        allowNull : false
+    },
+    number:{
+        type : DataTypes.STRING,
+        allowNull : false
+    },
+    rating:{
+        type : DataTypes.DECIMAL,
+        defaultValue : 0
+    },
+    age:{
+        type : DataTypes.DATE
+    },
+    role:{
+        type : DataTypes.STRING,
+        allowNull : false,
+        dafaultValue : 'user'
+    }
+})
+
+Чтобы синхронизировать модель с бд надо использовать sequelize.sync:
+
+await sequelize.sync() - команда для синхронизации модели с базой данных, будет создавать при отсутсвии
+await sequelize.sync( {force : true} ) - удалит бд и создаст новую
+await sequelize.sync( {alter : true} ) - обновит бд и внесёт новую информацию, даже существующую
+
+Вписывать эту команду внутри index.js в const Start = async () сразу после аутентификации
+
+const Start = async () => {
+	try {
+		await sequelize.authenticate()
+		await sequelize.sync( {alter : true} )
+		app.listen(PORT, () => {
+   		console.log(`сервер запущен на порту ${PORT}`
+)})
+		console.log('Успешное подключение к БД')
+}	catch(error){ // это отрабатывается, если не выполнится try
+		console.error('Не удалось подключиться к БД', error)
+}}
+
+Связи в sequelize для бд делают через команды hasOne\hasMany и belongsTo\belongsToMany
+hasOne\hasMany определяют Первичный ключ -> Внешний ключ
+belongsTo\belongsToMany определяют Внешний ключ -> Первичный ключ
+
+В файле models.js после объявления сущностей перед запуском функции:
+Client.hasOne(Order)
+Order.belongsTo(Client)
+
+Product.hasOne(OrderItem)
+OrderItem.belongsTo(Product)
+
+Order.hasOne(OrderItem)
+OrderItem.belongsTo(Order)
+
+д\з - пошариться по sequelize
