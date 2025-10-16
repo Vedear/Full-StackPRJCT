@@ -21,7 +21,7 @@ const Client = sequelize.define ('clients', {
         defaultValue : 0
     },
     age:{
-        type : DataTypes.DATE
+        type : DataTypes.INTEGER
     },
     role:{
         type : DataTypes.STRING,

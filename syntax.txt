@@ -219,3 +219,43 @@ Order.hasOne(OrderItem)
 OrderItem.belongsTo(Order)
 
 д\з - пошариться по sequelize
+
+16.10.2025
+Создание маршрутов (routes) с помощью get-запроса
+
+https://expressjs.com/en/guide/using-middleware.html#using-middleware
+https://my-js.org/docs/cheatsheet/express-api
+
+app.use(cors());
+app.use(express.json()); // функция парсит json, то есть жрёт так, как он есть
+
+app.get('/', (req, res) => {
+	res.status(200).json({
+		message: 'work'
+	})
+}) // работает, но надо доработать
+
+1-ая доработка - сделать его асинхронным (async)
+2 - обезопасить код, обернув в try/catch
+3 - добавить обработку ошибок
+4 - сделать более конкретным (/client)
+
+app.get('/api/clients', async(req, res) => {
+	try {const getClients = await Client.findAll();
+		res.status(200).json(getClients)}
+	catch (error) {
+		res.status(500).json({message: 'Ошибка сервера при получении данных'})
+	}
+});
+
+Такой код является доработанным.
+
+Данными командой можно проверить работу get запроса. CORS нужно для безопасности.
+При заходе на сайт http://localhost:5222 будет выдано сообщение в req.status.json
+
+Функция get принимает в себя 2 параметра:
+1) метод get (post, patch)
+2) путь на сервере ('/','/api','/clients')
+Дальше выполняется handler-функция с двумя объектами req (request) и res (response)
+В req (принимает то, что прислал клиент, обычно браузер)
+В res (обект ответа), сюда пишется ответ клиенту (на пример статус клиенту или json)
