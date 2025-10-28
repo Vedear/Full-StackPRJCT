@@ -49,7 +49,7 @@ const Product = sequelize.define ('products', {
         type : DataTypes.FLOAT,
         allowNull : false
     }
-
+    
 })
 
 const Order = sequelize.define ('orders', {
