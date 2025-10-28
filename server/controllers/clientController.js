@@ -42,6 +42,6 @@ export const deleteOneClient = async(req, res) => {
 	}
 };
 
-/* 
+/*
 try {const getClients = return res.getAllClients}???
 */

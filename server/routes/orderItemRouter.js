@@ -1,15 +1,16 @@
 import {Router} from 'express';
-import models from '../models/models.js';
+import {getAllOrderItems, getOneOrderItem, createOrderItem, deleteOneOrderItem} from '../controllers/orderItemController.js';
 
 const router = Router();
-const {OrderItem} = models;
 
-router.get('/getorderitems', async(req, res) => {
-	try {const getOrderItems = await OrderItem.findAll(); // SELECT * FORM OrderItems
-		res.status(200).json(getOrderItems)}
-	catch (error) {
-		res.status(500).json({message: 'Ошибка сервера при получении данных'})
-	}
-});
+router.get('/', getAllOrderItems)
+router.get('/:id', getOneOrderItem)
+router.post('/' , createOrderItem)
+router.delete('/:id', deleteOneOrderItem)
+
+/*
+router.patch('/:id', updateOrderItem)
+router.put('/:id', addToOrderItem)
+*/
 
 export default router;

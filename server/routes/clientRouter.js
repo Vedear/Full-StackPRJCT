@@ -8,7 +8,7 @@ router.get('/:id', getOneClient)
 router.post('/' , createClient)
 router.delete('/:id', deleteOneClient)
 
-/* 
+/*
 router.patch('/:id', updateClient)
 router.put('/:id', addToClient)
 */
