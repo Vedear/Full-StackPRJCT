@@ -280,3 +280,16 @@ try {const addClients = await Client.create({
 		createdAt : '2025-10-08',
 		updatedAt : '2025-10-08'
 		});
+
+
+28.10.2025
+
+1) req.params
+get /clients/1
+req.params = {id:123}
+
+2) req.query
+get /clients&page=1    --- с таким работать не будем
+
+3) req.body (тело запроса)
+{name: "Ivanov", age : 30}
