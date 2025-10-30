@@ -23,8 +23,8 @@ export const getOneProduct = async(req, res) => {
 
 export const createProduct = async(req, res) => {
     try {
-        const {total_price, status} = req.body;
-        const newProduct = await Product.create({total_price, status});
+        const {name, price, count} = req.body;
+        const newProduct = await Product.create({name, price, count});
         res.status(201).json(newProduct)}
     catch (error) {
         res.status(500).json({message: 'Ошибка сервера при получении данных'})
